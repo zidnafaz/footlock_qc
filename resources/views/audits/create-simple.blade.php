@@ -34,8 +34,9 @@
 
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label class="form-label">Kode Audit <span class="text-danger">*</span></label>
-                <input type="text" name="audit_code" class="form-control" placeholder="AUD-2025-XXX" required>
+                <label class="form-label">Kode Audit (Auto Generate)</label>
+                <input type="text" class="form-control" placeholder="{{ $nextAuditCode }}" disabled>
+                <small class="text-muted">Kode akan digenerate otomatis saat submit</small>
             </div>
             <div class="col-md-6 mb-3">
                 <label class="form-label">Tanggal Audit <span class="text-danger">*</span></label>

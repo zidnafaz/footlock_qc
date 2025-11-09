@@ -21,14 +21,14 @@ class AuditController extends Controller
     public function create()
     {
         $parameters = AuditParameter::active()->orderBy('aspect')->orderBy('parameter_name')->get();
-        return view('audits.create', compact('parameters'));
+        $nextAuditCode = AuditHeader::generateAuditCode();
+        return view('audits.create', compact('parameters', 'nextAuditCode'));
     }
 
     // Menyimpan audit baru
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'audit_code' => 'required|string|max:50|unique:audit_headers',
             'audit_date' => 'required|date',
             'auditor_name' => 'required|string|max:100',
             'department' => 'required|in:Cutting,Stitching,Assembling,Finishing',
@@ -41,12 +41,15 @@ class AuditController extends Controller
             'method' => 'required|in:Visual,Dimensional,Fungsi,Sampling',
         ]);
 
+        // Generate kode audit otomatis
+        $validated['audit_code'] = AuditHeader::generateAuditCode();
+
         // Simpan header
         $header = AuditHeader::create($validated);
 
         // Redirect ke halaman input detail
         return redirect()->route('audits.details.create', $header->id)
-            ->with('success', 'Data audit berhasil dibuat. Silakan isi detail audit.');
+            ->with('success', 'Data audit berhasil dibuat dengan kode: ' . $header->audit_code);
     }
 
     // Form untuk input detail audit
@@ -144,16 +147,16 @@ class AuditController extends Controller
     public function createSimple()
     {
         $parameters = AuditParameter::active()->orderBy('aspect')->orderBy('parameter_name')->get();
-        return view('audits.create-simple', compact('parameters'));
+        $nextAuditCode = AuditHeader::generateAuditCode();
+        return view('audits.create-simple', compact('parameters', 'nextAuditCode'));
     }
 
     // Store simple (AJAX)
     public function storeSimple(Request $request)
     {
         try {
-            // Validasi
+            // Validasi (hapus audit_code dari required)
             $validated = $request->validate([
-                'audit_code' => 'required|string|max:50|unique:audit_headers',
                 'audit_date' => 'required|date',
                 'auditor_name' => 'required|string|max:100',
                 'department' => 'required|in:Cutting,Stitching,Assembling,Finishing',
@@ -179,9 +182,12 @@ class AuditController extends Controller
                 'followup_due_date' => 'required|date',
             ]);
 
+            // Generate kode audit otomatis
+            $auditCode = AuditHeader::generateAuditCode();
+
             // Simpan Header
             $header = AuditHeader::create([
-                'audit_code' => $validated['audit_code'],
+                'audit_code' => $auditCode,
                 'audit_date' => $validated['audit_date'],
                 'auditor_name' => $validated['auditor_name'],
                 'department' => $validated['department'],

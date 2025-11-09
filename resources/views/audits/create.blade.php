@@ -16,12 +16,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label class="form-label">Kode Audit <span class="text-danger">*</span></label>
-                        <input type="text" name="audit_code" class="form-control @error('audit_code') is-invalid @enderror"
-                               value="{{ old('audit_code', 'AUD-' . date('Y') . '-' . str_pad(rand(1,999), 3, '0', STR_PAD_LEFT)) }}" required>
-                        @error('audit_code')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <label class="form-label">Kode Audit (Auto Generate)</label>
+                        <input type="text" class="form-control" placeholder="{{ $nextAuditCode }}" disabled>
+                        <small class="text-muted">Kode akan digenerate otomatis saat submit</small>
                     </div>
                 </div>
 

@@ -35,4 +35,24 @@ class AuditHeader extends Model
     {
         return $this->hasOne(AuditSummary::class, 'audit_header_id');
     }
+
+    // Generate kode audit otomatis
+    public static function generateAuditCode()
+    {
+        $year = date('Y');
+        $lastAudit = self::whereYear('created_at', $year)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($lastAudit) {
+            // Ambil 3 digit terakhir dari kode audit terakhir
+            $lastNumber = intval(substr($lastAudit->audit_code, -3));
+            $newNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+        } else {
+            // Jika belum ada audit tahun ini, mulai dari 001
+            $newNumber = '001';
+        }
+
+        return 'AUD-' . $year . '-' . $newNumber;
+    }
 }
