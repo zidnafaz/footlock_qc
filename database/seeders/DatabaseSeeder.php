@@ -17,9 +17,17 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        // Seed Audit Tables
+        $this->call([
+            AuditParameterSeeder::class,  // Harus pertama karena dipakai sebagai master
+            AuditHeaderSeeder::class,     // Kedua karena detail dan summary butuh header_id
+            AuditDetailSeeder::class,     // Ketiga setelah header dan parameter
+            AuditSummarySeeder::class,    // Terakhir setelah header ada
         ]);
     }
 }
