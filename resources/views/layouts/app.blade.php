@@ -44,6 +44,25 @@
         .table-hover tbody tr:hover {
             background-color: rgba(102, 126, 234, 0.05);
         }
+        .toggle-simple-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            font-weight: 600;
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+        .toggle-simple-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+            color: white;
+        }
     </style>
 
     @stack('styles')
@@ -95,6 +114,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Toggle to Simple View Button -->
+    <a href="{{ route('audits.create.simple') }}" class="toggle-simple-btn">
+        <i class="bi bi-file-earmark-text"></i> Simple Form View
+    </a>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

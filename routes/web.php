@@ -5,8 +5,12 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\AuditParameterController;
 
 Route::get('/', function () {
-    return redirect()->route('audits.index');
+    return redirect()->route('audits.create.simple');
 });
+
+// Route Simple (All-in-One Page)
+Route::get('/audit/new', [AuditController::class, 'createSimple'])->name('audits.create.simple');
+Route::post('/audit/store', [AuditController::class, 'storeSimple'])->name('audits.store.simple');
 
 // Routes untuk Audit
 Route::prefix('audits')->group(function () {
