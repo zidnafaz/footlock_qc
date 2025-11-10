@@ -25,6 +25,29 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             padding: 2.5rem;
         }
+
+        /* Responsive padding untuk mobile */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0;
+            }
+            .paper-card {
+                padding: 1.25rem;
+                border-radius: 0.75rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 0.5rem 0;
+            }
+            .paper-card {
+                padding: 1rem;
+                border-radius: 0.5rem;
+                margin: 0 0.5rem;
+            }
+        }
+
         .header-section {
             border-bottom: 3px solid #667eea;
             padding-bottom: 1rem;
